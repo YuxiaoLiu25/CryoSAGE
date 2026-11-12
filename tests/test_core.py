@@ -2,8 +2,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+import configparser
+import runpy
+from types import SimpleNamespace
 import tempfile
 import unittest
+from unittest.mock import Mock, patch
 
 import mrcfile
 from mmengine import Config
@@ -108,6 +112,24 @@ class NumericalTests(unittest.TestCase):
             else:
                 self.assertEqual(cfg.model.num_points, 32000)
                 self.assertEqual(cfg.trainer.max_epochs, 20)
+
+    def test_training_entry_points(self):
+        root = Path(__file__).resolve().parents[1]
+        metadata = configparser.ConfigParser()
+        metadata.read(root/"setup.cfg")
+        entry_points = dict(line.strip().split(" = ", 1) for line in
+                            metadata["options.entry_points"]["console_scripts"].splitlines()
+                            if line.strip())
+        manifest = (root/"MANIFEST.in").read_text().split()
+        for script, module, command in (("train.py", "cryosage.training.hetero", "cryosage-train"),
+                                        ("train_homo.py", "cryosage.training.homo", "cryosage-homo")):
+            with self.subTest(script=script):
+                self.assertIn(script, manifest)
+                self.assertEqual(entry_points[command], module+":train")
+                train = Mock()
+                with patch.dict("sys.modules", {module: SimpleNamespace(train=train)}):
+                    runpy.run_path(str(root/script), run_name="__main__")
+                train.assert_called_once_with()
 
     def test_controlled_training_settings(self):
         root = Path(__file__).resolve().parents[1]/"configs"

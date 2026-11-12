@@ -14,7 +14,7 @@ pose.  The VAE latent represents particle conformation; it is not an SO(3) pose.
 With ``model.hetero=False``, neither the VAE encoder nor the deformation field is
 constructed; all particles share one canonical Gaussian volume.
 
-Related heterogeneous runs use the separate ``train_hetero.py`` entry point.
+Latent-conditioned runs use the separate ``train.py`` entry point.
 Gaussian and training settings include:
 
     model = dict(
@@ -1451,7 +1451,7 @@ def train():
     )
     cfg = ensure_ctf_compatibility(cfg)
     if bool(cfg_get(cfg.model, "hetero", True)):
-        raise ValueError("Use train_hetero.py for heterogeneous reconstruction settings.")
+        raise ValueError("Use train.py for latent-conditioned reconstruction settings.")
 
     seed = cfg_get(cfg, "seed", None)
     if seed is not None:

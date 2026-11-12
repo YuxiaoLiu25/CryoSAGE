@@ -45,7 +45,7 @@ def main():
             cfg.dump(str(path))
             env = dict(os.environ)
             env["PYTHONPATH"] = str(repo)+os.pathsep+env.get("PYTHONPATH", "")
-            subprocess.run([sys.executable, str(repo/("train_homo.py" if mode == "homo" else "train_hetero.py")),
+            subprocess.run([sys.executable, str(repo/("train_homo.py" if mode == "homo" else "train.py")),
                             str(path)], cwd=folder, env=env, check=True)
             epochs = sorted((folder/"work_dirs").glob(f"smoke_{mode}*/epoch*"))
             if len(epochs) != 1:

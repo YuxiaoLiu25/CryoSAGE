@@ -34,7 +34,7 @@ bundled. Optional post-hoc labels must follow original STAR row order.
 Example path override:
 
 ```bash
-python train_hetero.py configs/hetero/10076.py --cfg-options \
+python train.py configs/hetero/10076.py --cfg-options \
   dataset.root=/path/to/10076/data \
   dataset.star=/path/to/10076/data/10076_particles_320_cryodrgn_pose.star
 ```

@@ -1,9 +1,9 @@
 # CryoSAGE
 
 CryoSAGE reconstructs cryo-EM density from pose-annotated particle images using
-anisotropic Gaussian primitives. Homogeneous reconstruction optimizes a shared
-Gaussian volume. Heterogeneous reconstruction uses particle latents to predict
-position offsets and, when enabled, factorized occupancy weights.
+anisotropic Gaussian primitives. Particle latents predict position offsets and,
+when enabled, factorized occupancy weights. Homogeneous reconstruction optimizes
+a shared Gaussian volume.
 
 The reference scaffold is randomly initialized and trainable. Particle rotations,
 translations and CTF metadata are supplied in a RELION STAR file. Template-free
@@ -34,15 +34,23 @@ paths or override them on the command line. Keep the STAR image names consistent
 with `dataset.root`; relative stack paths are resolved under that directory.
 See [data format](docs/data.md) for required metadata.
 
-All supplied settings train at the input image size without downsampling.
-Homogeneous settings use 32,000 Gaussians for 20 epochs. Heterogeneous settings
-use 64,000 Gaussians and an eight-dimensional latent space for 30 epochs.
+### Training
 
-Training hyperparameters are shared within each reconstruction mode. The 10180
-setting uses position-only dynamics; 10176 and 10076 use position offsets and
-factorized occupancy. Dataset-specific normalization and renderer gains are
-retained. `scale_images=-1` is retained for 10076; the other supplied datasets use
-positive contrast.
+```bash
+CUDA_VISIBLE_DEVICES=0 python train.py configs/hetero/10176.py
+CUDA_VISIBLE_DEVICES=0 python train.py configs/hetero/10076.py
+CUDA_VISIBLE_DEVICES=0 python train.py configs/hetero/10180.py
+```
+
+Or using multiple GPUs:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python train.py configs/hetero/10176.py --cfg-options trainer.devices=2
+```
+
+Published labels are not needed for training. The optional
+`configs/hetero/10076_labeled.py` enables post-hoc class/fine-class validation;
+it requires additional label files whose paths must also be configured.
 
 ### Homogeneous Reconstruction
 
@@ -69,33 +77,12 @@ Replace the placeholder data paths first. Half selection uses `rlnRandomSubset`
 and distinct random seeds (43 for half1 and 44 for half2). Full-data settings use
 seed 42. Never use two states decoded by one model as an independent half-map pair.
 
-### Heterogeneous Reconstruction
-
-```bash
-CUDA_VISIBLE_DEVICES=0 python train_hetero.py configs/hetero/10176.py
-CUDA_VISIBLE_DEVICES=0 python train_hetero.py configs/hetero/10076.py
-CUDA_VISIBLE_DEVICES=0 python train_hetero.py configs/hetero/10180.py
-```
-
-Or using multiple GPUs:
-
-```bash
-CUDA_VISIBLE_DEVICES=0,1 python train_hetero.py configs/hetero/10176.py --cfg-options trainer.devices=2
-```
-
 All settings default to a single GPU with four particles per GPU. For multiple
 GPUs, set `trainer.devices` to the number of GPUs listed in `CUDA_VISIBLE_DEVICES`;
 the same override works with any supplied setting. `loader.batch_size` is per
-GPU, not the effective global batch size. Within each mode, the examples share
-optimizer settings, network widths, positional encoding, loss settings and shape
-bounds; occupancy-specific
-settings apply only when occupancy is enabled. Evaluation defaults export four
+GPU, not the effective global batch size. Evaluation defaults export four
 maps on each of two PCA axes and at least ten observed representatives selected
 from UMAP. UMAP and PCA exports can be disabled separately.
-
-Published labels are not needed for training. The optional
-`configs/hetero/10076_labeled.py` enables post-hoc class/fine-class validation;
-it requires additional label files whose paths must also be configured.
 
 ## Outputs
 
@@ -114,8 +101,8 @@ sizes; unmasked/native map-export artifacts should be checked separately.
 
 ```text
 cryosage/          Training, STAR dataset, optics and numerical utilities
-configs/homo/     Full-data and independent-half homogeneous settings
 configs/hetero/   Dataset-specific heterogeneous settings
+configs/homo/     Full-data and independent-half homogeneous settings
 third_party/      Separately licensed CUDA rasterization/voxelization sources
 tests/            Small synthetic-data and numerical checks
 ```
