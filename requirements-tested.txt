@@ -1,0 +1,14 @@
+# Reference software versions of the validation environment, not CUDA wheel URLs.
+torch==2.8.0
+torchvision==0.23.0
+lightning==2.6.0
+mmengine==0.10.7
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.6.1
+pandas>=1.5
+matplotlib>=3.7
+umap-learn==0.5.11
+einops==0.8.1
+starfile==0.5.13
+mrcfile==1.5.4

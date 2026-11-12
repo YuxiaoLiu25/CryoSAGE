@@ -1,0 +1,122 @@
+{
+  "upstream": "https://github.com/bytedance/cryostar",
+  "upstream_base_commit": "b64aa39669bdbb69f801e3fe5961320a5820b615",
+  "note": "The local source contains later CryoSAGE changes not present in the upstream commit. Source paths are repository-relative, not machine locations.",
+  "adapted_files": [
+    {
+      "source": "projects/star/train_gaussian_vae.py",
+      "destination": "cryosage/training/homo.py",
+      "source_sha256": "9b15fffa511c0ce9451adb4229da718bb092ccac78cc2e68ed89cb3879a57c3c",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "projects/star/train_gaussian_tfree.py",
+      "destination": "cryosage/training/hetero.py",
+      "source_sha256": "8fb061d897f2e8ab833ecf7682e2854f1369d915ef0cf56bfe8b2eb2f2fca3c7",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "projects/star/dataio_one_stage_half.py",
+      "destination": "cryosage/dataio.py",
+      "source_sha256": "ed12461c3b8920313916094370c0015437fbe17200651c367add780dd82594d2",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "cryostar/utils/ctf_utils.py",
+      "destination": "cryosage/utils/ctf_utils.py",
+      "source_sha256": "d82dd467061a96b7de58b0f81f4308f2dbfb0433d2e5f483741ee96421487496",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "cryostar/utils/fft_utils.py",
+      "destination": "cryosage/utils/fft_utils.py",
+      "source_sha256": "90e14318418ecc82d61b9cf15b2c4867ffa10812dd115eb7ed2cffa0aead6e8a",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "cryostar/utils/transforms.py",
+      "destination": "cryosage/utils/transforms.py",
+      "source_sha256": "9493e4d5e80573ebe238b44ddeea32a06505e02a5143e5b57c69301b720d2593",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "cryostar/utils/geom_utils.py",
+      "destination": "cryosage/utils/geom_utils.py",
+      "source_sha256": "5c75cf76354ee4523d324a9b3f7a342281fd8efe7fb13ce0a6fcfec3dc5dbaf4",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "cryostar/utils/mrc_tools.py",
+      "destination": "cryosage/utils/mrc_tools.py",
+      "source_sha256": "f89588b8fbe0bbf8577b42f6562f09e20bd558da73c39d79f3c2feb35b558fae",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "cryostar/utils/misc.py",
+      "destination": "cryosage/utils/runtime.py",
+      "source_sha256": "b5b7a54c097cbe8baf6bc76065d1335a7c730fa622800bb7da2b6bd00414f4d6",
+      "changes": "Selected required definitions; renamed package imports; runtime cache and source-backup paths adjusted"
+    },
+    {
+      "source": "projects/star/vae_config/10049_homo_half1.py",
+      "destination": "configs/homo/10049.py",
+      "source_sha256": "b359c860101a98ae667c8b0283d9ba31443aee978d6b382996f40972fa3fb13e",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_config/10049_homo_half1.py",
+      "destination": "configs/homo/10049_half1.py",
+      "source_sha256": "b359c860101a98ae667c8b0283d9ba31443aee978d6b382996f40972fa3fb13e",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_config/10049_homo_half2.py",
+      "destination": "configs/homo/10049_half2.py",
+      "source_sha256": "68507235051516230a13f0f976485e52abc877c997e62a7e1c0934b802fbb4e6",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_config/10076_homo_half1.py",
+      "destination": "configs/homo/10076.py",
+      "source_sha256": "25c7776f0d7bbf47907f3d76cbeb19d3f521e9a34312712d1e2a33d3ce550600",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_config/10076_homo_half1.py",
+      "destination": "configs/homo/10076_half1.py",
+      "source_sha256": "25c7776f0d7bbf47907f3d76cbeb19d3f521e9a34312712d1e2a33d3ce550600",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_config/10076_homo_half2.py",
+      "destination": "configs/homo/10076_half2.py",
+      "source_sha256": "fa9adadb9145966bc85a8e0c32c7bd5f6d6718dfd5e81102fa5fdd37897a1c6d",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_occ_config/10176_tfree.py",
+      "destination": "configs/hetero/10176.py",
+      "source_sha256": "b38beb7638ec3b45aeed649181dab0d9ba5dde2926e414f7d28acc4e75ebe793",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_occ_config/10076_xyz_occ_3.py",
+      "destination": "configs/hetero/10076.py",
+      "source_sha256": "e370da8754859fda193d8808e51153e2ad35eaf13cfa7f45a4f861cb3e1b4987",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_config/10180.py",
+      "destination": "configs/hetero/10180.py",
+      "source_sha256": "3f81073e76ab4bf2de94330a48c8c52db0db0c2d5c968c5b9c67a011fcda8161",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    },
+    {
+      "source": "projects/star/vae_occ_config/10076_xyz_occ_3.py",
+      "destination": "configs/hetero/10076_labeled.py",
+      "source_sha256": "e370da8754859fda193d8808e51153e2ad35eaf13cfa7f45a4f861cb3e1b4987",
+      "changes": "Absolute paths anonymized; explicit full/half selection; optional label validation; PCA/UMAP export defaults"
+    }
+  ],
+  "renderer": "R2-Gaussian xray rasterization/voxelization, with its original third-party license"
+}

@@ -1,0 +1,37 @@
+CryoSAGE
+========
+
+This source distribution contains Gaussian reconstruction workflows and
+state-dependent modeling developed in a local research working tree.
+The training package was reorganized for CryoSAGE; it does not require an
+installed cryostar package or that project's directory structure.
+
+Adapted components
+------------------
+Selected experiment initialization, image/STAR handling, Fourier transforms,
+translations, CTF model wrappers and geometric utilities were adapted from
+CryoSTAR (Yi Zhou, Jing Yuan, Yilai Li and contributors):
+https://github.com/bytedance/cryostar
+These adaptations retain the Apache-2.0 license. The exact local source files
+and their hashes are recorded in provenance.json. The training programs also
+include subsequent local Gaussian and occupancy modeling changes.
+
+No GPL-licensed source files were copied into cryosage/utils/optics.py or
+cryosage/utils/latent.py. These small modules implement the conventional CTF
+equations and public NumPy/SciPy/scikit-learn operations directly. The CTF
+polarity convention and posterior-latent analysis are compatible with the
+existing workflows. cryoDRGN is a relevant methodological reference:
+https://github.com/ml-struct-bio/cryodrgn
+
+Separately licensed CUDA backend
+-------------------------------
+third_party/xray_gaussian_rasterization_voxelization is redistributed from the
+R2-Gaussian rasterization/voxelization backend, based on Gaussian Splatting.
+Its original copyright notices and LICENSE.md are preserved. This backend is
+subject to its research/non-commercial license, NOT the root Apache-2.0 license.
+See also licenses/R2-Gaussian.txt and the GLM copying.txt in that subtree.
+https://github.com/Ruyi-Zha/r2_gaussian
+https://github.com/graphdeco-inria/gaussian-splatting
+
+The top-level license does not override third-party terms. This distribution
+must not be advertised as an unrestricted-commercial-use renderer.

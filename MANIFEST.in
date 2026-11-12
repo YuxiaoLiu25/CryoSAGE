@@ -1,0 +1,8 @@
+include LICENSE NOTICE provenance.json requirements-tested.txt
+include train_homo.py train_hetero.py
+recursive-include configs *.py
+recursive-include docs *.md
+recursive-include licenses *.txt
+recursive-include tools *.py
+recursive-include tests *.py
+recursive-include third_party *.py *.cu *.cpp *.h *.hpp *.inl *.txt *.md
