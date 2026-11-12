@@ -6,9 +6,10 @@ performance benchmarks on the five experimental datasets.
 
 Completed checks:
 
-- Seven CPU unit checks: centered FFT round-trip, CTF at zero frequency, RELION
+- Eight CPU unit checks: centered FFT round-trip, CTF at zero frequency, RELION
   rotation identity, zero translation, PCA observed representatives, disjoint
-  STAR half subsets, and all ten example settings.
+  STAR half subsets, all ten example settings, and controlled training settings
+  with an explicit position-only exception for 10180.
 - Bundled CUDA sources compiled successfully into a separate temporary build.
   Training smoke tests used that new build, not a replacement installed into the
   working research environment.

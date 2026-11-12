@@ -15,8 +15,8 @@ dataset = dict(
     star='/path/to/10049/data/Refine3D_10049/job001/run_data.star')
 eval = dict(every_n_epochs=1)
 exp_name = '10049_homo_half2'
-loader = dict(batch_size=8, num_workers=4, persistent_workers=False)
-loss = dict(mask_radius=1.25, real_mse_scale='parseval', type='real_mse')
+loader = dict(batch_size=4, num_workers=4, persistent_workers=False)
+loss = dict(mask_radius=1.0, real_mse_scale='parseval', type='real_mse')
 model = dict(
     camera_z=5.0,
     ctf='v2',
@@ -24,7 +24,7 @@ model = dict(
     hetero=False,
     init_density=0.0009,
     init_scale=0.012,
-    num_points=65536,
+    num_points=32000,
     renderer_gain=100.0,
     scale_max=0.2,
     scale_min=0.001,
@@ -38,6 +38,6 @@ optim = dict(
     scheduler='cosine',
     strength_lr=0.0005,
     weight_decay=0.0)
-seed = 100492
+seed = 44
 train = dict(log_every=100)
-trainer = dict(devices=4, max_epochs=20, precision='16-mixed')
+trainer = dict(devices=1, max_epochs=20, precision='16-mixed')

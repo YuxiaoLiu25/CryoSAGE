@@ -94,11 +94,52 @@ class NumericalTests(unittest.TestCase):
             self.assertTrue(cfg.dataset.root.startswith("/path/to/"))
             self.assertTrue(cfg.dataset.star.startswith("/path/to/"))
             self.assertTrue(cfg.dataset["lazy"])
+            self.assertEqual(cfg.dataset.down_size, cfg.dataset.size)
+            self.assertEqual(cfg.trainer.devices, 1)
+            self.assertEqual(cfg.seed, {"all": 42, "half1": 43, "half2": 44}[cfg.dataset.half])
             if cfg.model.hetero:
+                self.assertEqual(cfg.model.z_dim, 8)
+                self.assertEqual(cfg.model.num_points, 64000)
+                self.assertEqual(cfg.trainer.max_epochs, 30)
                 self.assertEqual(cfg.eval.pca_steps, 4)
                 self.assertGreaterEqual(cfg.eval.umap_num_representatives, 10)
                 if cfg.model.deform_attributes == "xyz":
                     self.assertEqual(cfg.model.deform_decoder, "joint")
+            else:
+                self.assertEqual(cfg.model.num_points, 32000)
+                self.assertEqual(cfg.trainer.max_epochs, 20)
+
+    def test_controlled_training_settings(self):
+        root = Path(__file__).resolve().parents[1]/"configs"
+        for mode in ("homo", "hetero"):
+            reference = Config.fromfile(str(root/mode/"10076.py"))
+            sections = ("optim", "loader", "trainer", "train")
+            if mode == "hetero":
+                sections += ("vae",)
+            for file in sorted((root/mode).glob("*.py")):
+                cfg = Config.fromfile(str(file))
+                with self.subTest(config=file.name, mode=mode):
+                    for section in sections:
+                        self.assertEqual(dict(cfg[section]), dict(reference[section]), section)
+                    # Occupancy is intentionally disabled for 10180, not a narrower xyz network.
+                    position_only = mode == "hetero" and file.stem == "10180"
+                    excluded = {"deform_attributes", "deform_decoder"} if position_only else set()
+                    if position_only:
+                        excluded.update(key for key in reference.model if key.startswith("occupancy_"))
+                    self.assertEqual({k: v for k, v in cfg.model.items() if k not in excluded},
+                                     {k: v for k, v in reference.model.items() if k not in excluded})
+                    self.assertEqual({k: v for k, v in cfg.loss.items() if k != "occupancy_off_penalty"},
+                                     {k: v for k, v in reference.loss.items() if k != "occupancy_off_penalty"})
+                    if position_only:
+                        self.assertEqual(cfg.model.deform_attributes, "xyz")
+                        self.assertEqual(cfg.model.deform_decoder, "joint")
+                        self.assertFalse(any(k.startswith("occupancy_") for k in cfg.model))
+                        self.assertNotIn("occupancy_off_penalty", cfg.loss)
+                    elif mode == "hetero":
+                        self.assertEqual(cfg.model.deform_attributes, "xyz_occupancy")
+                        self.assertEqual(cfg.model.deform_decoder, "factorized")
+                        self.assertEqual(cfg.loss.occupancy_off_penalty,
+                                         reference.loss.occupancy_off_penalty)
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 dataset = dict(
     apix=1.067,
     down_method='interp',
-    down_size=192,
+    down_size=384,
     f_mu=None,
     f_std=None,
     half='all',
@@ -59,7 +59,7 @@ model = dict(
     hetero=True,
     init_density=0.0009,
     init_scale=0.012,
-    num_points=32768,
+    num_points=64000,
     occupancy_factor_dim=16,
     occupancy_factor_hidden=128,
     occupancy_factor_layers=2,
@@ -102,7 +102,7 @@ optim = dict(
     weight_decay=0.0)
 seed = 42
 train = dict(log_every=500)
-trainer = dict(devices=4, max_epochs=30, precision='16-mixed')
+trainer = dict(devices=1, max_epochs=30, precision='16-mixed')
 vae = dict(
     beta=None,
     beta_warmup_epochs=5,

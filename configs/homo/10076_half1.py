@@ -25,7 +25,7 @@ model = dict(
     hetero=False,
     init_density=0.0009,
     init_scale=0.012,
-    num_points=65536,
+    num_points=32000,
     renderer_gain=100.0,
     scale_max=0.2,
     scale_min=0.001,
@@ -39,6 +39,6 @@ optim = dict(
     scheduler='cosine',
     strength_lr=0.0005,
     weight_decay=0.0)
-seed = 100761
+seed = 43
 train = dict(log_every=100)
-trainer = dict(devices=2, max_epochs=20, precision='16-mixed')
+trainer = dict(devices=1, max_epochs=20, precision='16-mixed')

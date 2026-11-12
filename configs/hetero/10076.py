@@ -61,7 +61,8 @@ model = dict(
     gaussian_parameterization='density',
     hetero=True,
     init_density=0.0009,
-    num_points=65536,
+    init_scale=0.012,
+    num_points=64000,
     occupancy_factor_dim=16,
     occupancy_factor_hidden=128,
     occupancy_factor_layers=2,
@@ -90,7 +91,7 @@ model = dict(
     scale_max=0.25,
     scale_min=0.001,
     shift_method='fft',
-    z_dim=10)
+    z_dim=8)
 optim = dict(
     deform_lr=0.0001,
     encoder_lr=0.0001,
@@ -104,7 +105,7 @@ optim = dict(
     weight_decay=0.0)
 seed = 42
 train = dict(log_every=500)
-trainer = dict(devices=4, max_epochs=30, precision='16-mixed')
+trainer = dict(devices=1, max_epochs=30, precision='16-mixed')
 vae = dict(
     beta=None,
     beta_warmup_epochs=5,
